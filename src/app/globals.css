@@ -6,3 +6,16 @@
 body {
   font-family: "Josefin Sans", sans-serif;
 }
+
+#input {
+  box-shadow: 0 30px 8px rgba(0, 0, 0, 0.2);
+}
+
+#todos {
+  box-shadow: 10px 2px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* .hover-circle:hover {
+  border-image: linear-gradient(to bottom right, #57ddff, #c058f3);
+  border-image-slice: 1;
+} */
