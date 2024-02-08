@@ -1,0 +1,61 @@
+.styles {
+
+
+    /* Primary Colors */
+/* Bright Blue: hsl(220, 98%, 61%) */
+color: #0073e6;
+
+/* Check Background: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%) */
+/* Check Background: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%) */
+background-image: linear-gradient(to right, #57ddff, #c058f3);
+
+
+
+/* Neutral */
+
+/* Light Theme */
+/* Very Light Gray: hsl(0, 0%, 98%) */
+color: #fafafa;
+
+/* Very Light Grayish Blue: hsl(236, 33%, 92%) */
+color: #d6e4f0;
+
+/* Light Grayish Blue: hsl(233, 11%, 84%) */
+color: #c4d4e8;
+
+/* Dark Grayish Blue: hsl(236, 9%, 61%) */
+color: #7b8e9e;
+
+/* Very Dark Grayish Blue: hsl(235, 19%, 35%) */
+color: #475b6e;
+
+
+
+/* Dark Theme is done */
+/* Very Dark Blue: hsl(235, 21%, 11%) */
+color: #161722;
+
+/* Very Dark Desaturated Blue: hsl(235, 24%, 19%) */
+color: #25273c;
+
+/* Light Grayish Blue: hsl(234, 39%, 85%) */
+color: #cacde8;
+
+/* Light Grayish Blue (hover): hsl(236, 33%, 92%) */
+color: #e4e5f1;
+
+/* Dark Grayish Blue: hsl(234, 11%, 52%) */
+color: #777a92;
+
+/* Very Dark Grayish Blue: hsl(233, 14%, 35%) */
+color: #4d5066;
+
+/* Very Dark Grayish Blue: hsl(237, 14%, 26%) */
+color: #393a4c;
+
+/* Typography */
+/* Body Copy */
+/* Font size: 18px */
+font-size: 18px;
+
+}
