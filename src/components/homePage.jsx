@@ -7,9 +7,13 @@ const HomePage = ({ theme, changeTheme }) => {
   return (
     <div
       id="container "
-      className="bg-cover h-[200px] sm:h-[320px] flex flex-col sm:items-center gap-3 bg-center  bg-[url('/images/bg-mobile-dark.jpg')] 
-      sm:bg-cover 
-      sm:bg-[url('/images/bg-desktop-dark.jpg')]"
+      className={`bg-cover h-[200px] sm:h-[320px] flex flex-col sm:items-center gap-3 bg-center ${
+        theme == "dark"
+          ? 'bg-[url("/images/bg-mobile-dark.jpg")]' +
+            ' sm:bg-cover sm:bg-[url("/images/bg-desktop-dark.jpg")]'
+          : 'bg-[url("/images/bg-mobile-light.jpg")]' +
+            ' sm:bg-cover sm:bg-[url("/images/bg-desktop-light.jpg")]'
+      }`}
     >
       <div
         id="head"
@@ -18,14 +22,25 @@ const HomePage = ({ theme, changeTheme }) => {
         <h1 className="text-3xl font-bold text-[#fafafa] tracking-[8px] sm:text-5xl sm:tracking-[14px]">
           TODO
         </h1>
-        <button onClick={changeTheme}>
-          <Image
-            src="/images/icon-sun.svg"
-            className="sm:w-8 sm:h-8 hover:cursor-pointer"
-            width={20}
-            height={20}
-          />
-        </button>
+        {theme == "dark" ? (
+          <button onClick={changeTheme}>
+            <Image
+              src="/images/icon-sun.svg"
+              className="sm:w-8 sm:h-8 hover:cursor-pointer"
+              width={20}
+              height={20}
+            />
+          </button>
+        ) : (
+          <button onClick={changeTheme}>
+            <Image
+              src="/images/icon-moon.svg"
+              className="sm:w-8 sm:h-8 hover:cursor-pointer"
+              width={20}
+              height={20}
+            />
+          </button>
+        )}
       </div>
       <div
         id="input"
@@ -43,7 +58,7 @@ const HomePage = ({ theme, changeTheme }) => {
           name="todoItem"
           placeholder="Create a new todo..."
           className={` ${
-            theme == "dark" ? "bg-[#25273c]" : "bg-[#fafafa]"
+            theme == "dark" ? "bg-[#25273c] text-[#e4e5f1]" : "bg-[#fafafa]"
           } rounded-md py-3 sm:py-5 text-[#484b6a] w-full focus:border-transparent focus:outline-none`}
         />
       </div>
@@ -53,11 +68,11 @@ const HomePage = ({ theme, changeTheme }) => {
 
           <li className="group">
             <div
-              className={` shadow-xl flex items-center justify-left ${
+              className={`  flex items-center justify-left ${
                 theme == "dark"
-                  ? "bg-[#25273c] border-b border-b-[#4d5066]"
-                  : "bg-[#fafafa] border-b border-b-[#d2d3db] "
-              } bg-[#25273c] gap-3 mx-6 sm:mx-0 rounded-sm py-4  sm:py-5 `}
+                  ? "bg-[#25273c] border-b border-b-[#4d5066] "
+                  : "bg-[#fafafa] border-b border-b-[#d2d3db] shadow-xl"
+              } bg-[#25273c] gap-3 mx-6 sm:mx-0 rounded-tl-md rounded-tr-md py-4  sm:py-5 `}
             >
               <span
                 className={`w-6 h-6 border-2  ${
@@ -89,10 +104,10 @@ const HomePage = ({ theme, changeTheme }) => {
           {/* uncompleted */}
 
           <li
-            class={`shadow-xl justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
+            class={`justify-left group mx-6 flex items-center gap-3   ${
               theme == "dark"
-                ? "bg-[#25273c] border-b border-b-[#4d5066]"
-                : "bg-[#fafafa] border-b-[1px] border-b-[#d2d3db]"
+                ? "custom-shadow bg-[#25273c] border-b border-b-[#4d5066]"
+                : "bg-[#fafafa] border-b-[1px] border-b-[#d2d3db] shadow-xl "
             } py-4 sm:mx-0 sm:py-5`}
           >
             <div
@@ -107,8 +122,8 @@ const HomePage = ({ theme, changeTheme }) => {
               ></span>
             </div>
             <p
-              class={`text-sm text-[#484b6a] hover:cursor-pointer hover:text-[#484b6a] sm:w-[222px] sm:pl-3 ${
-                theme == "dark" ? "text-[#484b6a]" : "text-[#484b6a]"
+              class={`text-sm text-[#484b6a] hover:cursor-pointer  sm:w-[222px] sm:pl-3 ${
+                theme == "dark" ? "text-[#e4e5f1]" : "text-[#484b6a]"
               }`}
             >
               Jog around the park 3x
@@ -121,9 +136,9 @@ const HomePage = ({ theme, changeTheme }) => {
             />
           </li>
           <li
-            class={`shadow-xl justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
+            class={`shadow-xl justify-left group mx-6 flex items-center gap-3  ${
               theme == "dark"
-                ? "bg-[#25273c] border-b border-b-[#4d5066]"
+                ? "custom-shadow bg-[#25273c] border-b border-b-[#4d5066]"
                 : "bg-[#fafafa] border-b border-b-[#d2d3db]"
             } py-4 sm:mx-0 sm:py-5`}
           >
@@ -139,8 +154,8 @@ const HomePage = ({ theme, changeTheme }) => {
               ></span>
             </div>
             <p
-              class={`text-sm text-[#484b6a] hover:cursor-pointer hover:text-[#484b6a] sm:w-[222px] sm:pl-3 ${
-                theme == "dark" ? "text-[#484b6a]" : "text-[#484b6a]"
+              class={`text-sm text-[#484b6a] hover:cursor-pointer  sm:w-[222px] sm:pl-3 ${
+                theme == "dark" ? "text-[#e4e5f1]" : "text-[#484b6a]"
               }`}
             >
               Jog around the park 3x
@@ -153,9 +168,9 @@ const HomePage = ({ theme, changeTheme }) => {
             />
           </li>
           <li
-            class={`shadow-xl justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
+            class={`shadow-xl justify-left group mx-6 flex items-center gap-3  ${
               theme == "dark"
-                ? "bg-[#25273c] border-b border-b-[#4d5066]"
+                ? "custom-shadow bg-[#25273c] border-b border-b-[#4d5066]"
                 : "bg-[#fafafa] border-b border-b-[#d2d3db]"
             } py-4 sm:mx-0 sm:py-5`}
           >
@@ -171,8 +186,8 @@ const HomePage = ({ theme, changeTheme }) => {
               ></span>
             </div>
             <p
-              class={`text-sm text-[#484b6a] hover:cursor-pointer hover:text-[#484b6a] sm:w-[222px] sm:pl-3 ${
-                theme == "dark" ? "text-[#484b6a]" : "text-[#484b6a]"
+              class={`text-sm text-[#484b6a] hover:cursor-pointer  sm:w-[222px] sm:pl-3 ${
+                theme == "dark" ? "text-[#e4e5f1]" : "text-[#484b6a]"
               }`}
             >
               Jog around the park 3x
@@ -185,9 +200,9 @@ const HomePage = ({ theme, changeTheme }) => {
             />
           </li>
           <li
-            class={`shadow-xl justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
+            class={`shadow-xl justify-left group mx-6 flex items-center gap-3 ${
               theme == "dark"
-                ? "bg-[#25273c] border-b border-b-[#4d5066]"
+                ? "custom-shadow bg-[#25273c] border-b border-b-[#4d5066]"
                 : "bg-[#fafafa] border-b border-b-[#d2d3db]"
             } py-4 sm:mx-0 sm:py-5`}
           >
@@ -203,8 +218,8 @@ const HomePage = ({ theme, changeTheme }) => {
               ></span>
             </div>
             <p
-              class={`text-sm text-[#484b6a] hover:cursor-pointer hover:text-[#484b6a] sm:w-[222px] sm:pl-3 ${
-                theme == "dark" ? "text-[#484b6a]" : "text-[#484b6a]"
+              class={`text-sm text-[#484b6a] hover:cursor-pointer  sm:w-[222px] sm:pl-3 ${
+                theme == "dark" ? "text-[#e4e5f1]" : "text-[#484b6a]"
               }`}
             >
               Jog around the park 3x
@@ -217,9 +232,9 @@ const HomePage = ({ theme, changeTheme }) => {
             />
           </li>
           <li
-            class={`shadow-xl justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
+            class={`shadow-xl justify-left group mx-6 flex items-center gap-3  ${
               theme == "dark"
-                ? "bg-[#25273c] border-b border-b-[#4d5066]"
+                ? "custom-shadow bg-[#25273c] border-b border-b-[#4d5066]"
                 : "bg-[#fafafa] border-b border-b-[#d2d3db]"
             } py-4 sm:mx-0 sm:py-5`}
           >
@@ -235,8 +250,8 @@ const HomePage = ({ theme, changeTheme }) => {
               ></span>
             </div>
             <p
-              class={`text-sm text-[#484b6a] hover:cursor-pointer hover:text-[#484b6a] sm:w-[222px] sm:pl-3 ${
-                theme == "dark" ? "text-[#484b6a]" : "text-[#484b6a]"
+              class={`text-sm text-[#484b6a] hover:cursor-pointer  sm:w-[222px] sm:pl-3 ${
+                theme == "dark" ? "text-[#e4e5f1]" : "text-[#484b6a]"
               }`}
             >
               Jog around the park 3x
@@ -252,8 +267,10 @@ const HomePage = ({ theme, changeTheme }) => {
           <li>
             <div
               className={`flex items-center justify-between ${
-                theme == "dark" ? "bg-[#25273c]" : "bg-[#fafafa]"
-              } gap-3 mx-6 sm:mx-0 rounded-sm py-4 sm:py-5 px-5 sm:border-b sm:border-b-[#4d5066] sm:hidden shadow-xl`}
+                theme == "dark"
+                  ? "custom-shadow shadow-xl bg-[#25273c]"
+                  : "bg-[#fafafa]"
+              } gap-3 mx-6 sm:mx-0  rounded-bl-md rounded-br-md  py-4 sm:py-5 px-5 sm:border-b sm:border-b-[#4d5066] sm:hidden shadow-xl`}
             >
               <p
                 className={`text-sm ${
@@ -265,7 +282,7 @@ const HomePage = ({ theme, changeTheme }) => {
               <p
                 className={`text-sm ${
                   theme == "dark" ? "text-[#4d5066]" : "text-[#9394a5]"
-                }`}
+                } hover:cursor-pointer`}
               >
                 Clear completed
               </p>
@@ -275,20 +292,32 @@ const HomePage = ({ theme, changeTheme }) => {
         <div id="sort" className="mt-5  sm:mt-0">
           <div
             className={`flex items-center justify-center sm:justify-between bg-[#25273c] ${
-              theme == "dark" ? "bg-[#25273c]" : "bg-[#fafafa]"
-            } gap-3 mx-6 sm:mx-0 rounded-sm py-4 sm:py-5 px-5  shadow-blur`}
+              theme == "dark"
+                ? "custom-shadow shadow-xl bg-[#25273c]"
+                : "bg-[#fafafa]"
+            } gap-3 mx-6 sm:mx-0 rounded-bl-md rounded-br-md py-4 sm:py-5 px-5  shadow-blur`}
           >
-            <p className="text-sm text-[#4d5066] sm:block hidden">
+            <p
+              className={`text-sm  ${
+                theme == "dark" ? "text-[#777a92]" : "text-[#9394a5]"
+              } sm:block hidden`}
+            >
               5 items left
             </p>
             <span className="flex sm:gap-3 gap-5">
-              <p className="text-sm text-[#0073e6] hover:text-[#484b6a] hover:cursor-pointer">
+              <p
+                className={`text-sm text-[#0073e6] hover:text-[#cacde8] ${
+                  theme == "dark"
+                    ? "hover:text-[#cacde8]"
+                    : "hover:text-[#393a4c]"
+                } hover:font-bold hover:cursor-pointer `}
+              >
                 All
               </p>
               <p
                 className={`text-sm  ${
                   theme == "dark"
-                    ? "text-[#4d5066]"
+                    ? "text-[#777a92] hover:text-[#cacde8] hover:font-bold"
                     : "text-[#9394a5] font-bold"
                 } hover:text-[#484b6a] hover:cursor-pointer`}
               >
@@ -297,7 +326,7 @@ const HomePage = ({ theme, changeTheme }) => {
               <p
                 className={`text-sm  ${
                   theme == "dark"
-                    ? "text-[#4d5066]"
+                    ? "text-[#777a92] hover:text-[#cacde8] hover:font-bold"
                     : "text-[#9394a5] font-bold"
                 } hover:text-[#484b6a] hover:cursor-pointer`}
               >
@@ -305,7 +334,13 @@ const HomePage = ({ theme, changeTheme }) => {
               </p>
             </span>
 
-            <p className="text-sm text-[#4d5066] sm:block hidden hover:text-[#484b6a] hover:cursor-pointer">
+            <p
+              className={`text-sm ${
+                theme == "dark"
+                  ? "text-[#777a92] hover:text-[#cacde8]"
+                  : "text-[#9394a5] hover:text-[#484b6a]"
+              } sm:block hidden  hover:cursor-pointer`}
+            >
               Clear completed
             </p>
           </div>
