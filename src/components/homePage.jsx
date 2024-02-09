@@ -31,7 +31,7 @@ const HomePage = ({ theme, changeTheme }) => {
         id="input"
         className={`flex items-center gap-3 justify-left ${
           theme == "dark" ? "bg-[#25273c]" : "bg-[#fafafa]"
-        }   mx-6 rounded-sm sm:w-[550px]`}
+        }   mx-6 rounded-md sm:w-[550px]`}
       >
         <span
           className={`min-w-6 h-6 border-2 border-[#393a4c] ${
@@ -44,14 +44,16 @@ const HomePage = ({ theme, changeTheme }) => {
           placeholder="Create a new todo..."
           className={` ${
             theme == "dark" ? "bg-[#25273c]" : "bg-[#fafafa]"
-          } py-3 sm:py-5 text-[#484b6a] w-full focus:border-transparent focus:outline-none`}
+          } rounded-md py-3 sm:py-5 text-[#484b6a] w-full focus:border-transparent focus:outline-none`}
         />
       </div>
-      <div id="todos" className="sm:w-[550px] sm:mt-5">
-        <ul className="">
+      <div className="sm:w-[550px] sm:mt-5">
+        <ul>
+          {/* completed */}
+
           <li className="group">
             <div
-              className={`flex items-center justify-left ${
+              className={` shadow-xl flex items-center justify-left ${
                 theme == "dark"
                   ? "bg-[#25273c] border-b border-b-[#4d5066]"
                   : "bg-[#fafafa] border-b border-b-[#d2d3db] "
@@ -87,7 +89,7 @@ const HomePage = ({ theme, changeTheme }) => {
           {/* uncompleted */}
 
           <li
-            class={`justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
+            class={`shadow-xl justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
               theme == "dark"
                 ? "bg-[#25273c] border-b border-b-[#4d5066]"
                 : "bg-[#fafafa] border-b-[1px] border-b-[#d2d3db]"
@@ -119,7 +121,7 @@ const HomePage = ({ theme, changeTheme }) => {
             />
           </li>
           <li
-            class={`justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
+            class={`shadow-xl justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
               theme == "dark"
                 ? "bg-[#25273c] border-b border-b-[#4d5066]"
                 : "bg-[#fafafa] border-b border-b-[#d2d3db]"
@@ -151,7 +153,7 @@ const HomePage = ({ theme, changeTheme }) => {
             />
           </li>
           <li
-            class={`justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
+            class={`shadow-xl justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
               theme == "dark"
                 ? "bg-[#25273c] border-b border-b-[#4d5066]"
                 : "bg-[#fafafa] border-b border-b-[#d2d3db]"
@@ -183,7 +185,7 @@ const HomePage = ({ theme, changeTheme }) => {
             />
           </li>
           <li
-            class={`justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
+            class={`shadow-xl justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
               theme == "dark"
                 ? "bg-[#25273c] border-b border-b-[#4d5066]"
                 : "bg-[#fafafa] border-b border-b-[#d2d3db]"
@@ -215,7 +217,7 @@ const HomePage = ({ theme, changeTheme }) => {
             />
           </li>
           <li
-            class={`justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
+            class={`shadow-xl justify-left group mx-6 flex items-center gap-3 rounded-sm  ${
               theme == "dark"
                 ? "bg-[#25273c] border-b border-b-[#4d5066]"
                 : "bg-[#fafafa] border-b border-b-[#d2d3db]"
@@ -251,7 +253,7 @@ const HomePage = ({ theme, changeTheme }) => {
             <div
               className={`flex items-center justify-between ${
                 theme == "dark" ? "bg-[#25273c]" : "bg-[#fafafa]"
-              } gap-3 mx-6 sm:mx-0 rounded-sm py-4 sm:py-5 px-5 sm:border-b sm:border-b-[#4d5066] sm:hidden`}
+              } gap-3 mx-6 sm:mx-0 rounded-sm py-4 sm:py-5 px-5 sm:border-b sm:border-b-[#4d5066] sm:hidden shadow-xl`}
             >
               <p
                 className={`text-sm ${
@@ -274,7 +276,7 @@ const HomePage = ({ theme, changeTheme }) => {
           <div
             className={`flex items-center justify-center sm:justify-between bg-[#25273c] ${
               theme == "dark" ? "bg-[#25273c]" : "bg-[#fafafa]"
-            } gap-3 mx-6 sm:mx-0 rounded-sm py-4 sm:py-5 px-5`}
+            } gap-3 mx-6 sm:mx-0 rounded-sm py-4 sm:py-5 px-5  shadow-blur`}
           >
             <p className="text-sm text-[#4d5066] sm:block hidden">
               5 items left
