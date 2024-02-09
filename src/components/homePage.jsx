@@ -1,7 +1,19 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
 
 const HomePage = () => {
+  const [theme, setTheme] = useState("light");
+
+  const changeTheme = () => {
+    if (theme == "dark") {
+      setTheme("light");
+    } else {
+      setTheme("dark");
+    }
+    console.log(theme);
+  };
   return (
     <div
       id="container "
@@ -16,29 +28,43 @@ const HomePage = () => {
         <h1 className="text-3xl font-bold text-[#fafafa] tracking-[8px] sm:text-5xl sm:tracking-[14px]">
           TODO
         </h1>
-        <Image
-          src="/images/icon-sun.svg"
-          className="sm:w-8 sm:h-8"
-          width={20}
-          height={20}
-        />
+        <button onClick={changeTheme}>
+          <Image
+            src="/images/icon-sun.svg"
+            className="sm:w-8 sm:h-8 hover:cursor-pointer"
+            width={20}
+            height={20}
+          />
+        </button>
       </div>
       <div
         id="input"
-        className="flex items-center gap-3 justify-left bg-[#25273c] mx-6 rounded-sm sm:w-[550px] focus:"
+        className={`flex items-center gap-3 justify-left ${
+          theme == "dark" ? "bg-[#25273c]" : "bg-[#fafafa]"
+        }   mx-6 rounded-sm sm:w-[550px]`}
       >
-        <span className="min-w-6 h-6 border-2 border-[#393a4c] rounded-full ml-5 "></span>
+        <span
+          className={`min-w-6 h-6 border-2 border-[#393a4c] ${
+            theme == "dark" ? "border-2" : "border border-[#d2d3db]"
+          } rounded-full ml-5 `}
+        ></span>
         <input
           type="text"
           name="todoItem"
           placeholder="Create a new todo..."
-          className="bg-[#25273c] py-3 sm:py-5 text-[#c4d4e8] w-full focus:border-transparent focus:outline-none"
+          className={` ${
+            theme == "dark" ? "bg-[#25273c]" : "bg-[#fafafa]"
+          } py-3 sm:py-5 text-[#c4d4e8] w-full focus:border-transparent focus:outline-none`}
         />
       </div>
       <div id="todos" className="sm:w-[550px] sm:mt-5">
         <ul>
-          <li>
-            <div className="flex items-center justify-left bg-[#25273c] gap-3 mx-6 sm:mx-0 rounded-sm py-4  sm:py-5 border-b border-b-[#4d5066] ">
+          <li className="group">
+            <div
+              className={`flex items-center justify-left ${
+                theme == "dark" ? "bg-[#25273c]" : "bg-[#fafafa]"
+              } bg-[#25273c] gap-3 mx-6 sm:mx-0 rounded-sm py-4  sm:py-5 border-b border-b-[#4d5066] `}
+            >
               <span className="w-6 h-6 border-2 border-[#393a4c] rounded-full ml-5  bg-gradient-to-br from-[#57ddff] to-[#c058f3] hover:cursor-pointer"></span>
               <Image
                 src="/images/icon-check.svg"
@@ -53,89 +79,83 @@ const HomePage = () => {
                 src="/images/icon-cross.svg"
                 width={15}
                 height={15}
-                className="absolute right-10 sm:right-[-210px] sm:relative hover:cursor-pointer"
+                className="absolute sm:hidden right-10 sm:right-[-210px] sm:relative hover:cursor-pointer group-hover:block"
               />
             </div>
           </li>
-          <li>
-            <div className="flex items-center justify-left bg-[#25273c] gap-3 mx-6 sm:mx-0 rounded-sm py-4 sm:py-5 border-b border-b-[#4d5066]">
-              <div class="gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full bg-[#393a4c] from-[#57ddff] to-[#c058f3] hover:bg-gradient-to-br">
-                <span class="inner-gradient h-[22px] w-[22px] cursor-pointer rounded-full bg-[#25273c] "></span>
-              </div>
-              <p className="text-sm text-[#c4d4e8] sm:pl-3 sm:w-[222px] hover:text-[#c4d4e8] hover:cursor-pointer">
-                Jog around the park 3x
-              </p>
-              <Image
-                src="/images/icon-cross.svg"
-                width={15}
-                height={15}
-                className="absolute right-10 sm:right-[-210px] sm:relative hover:cursor-pointer"
-              />
+
+          {/* uncompleted */}
+
+          <li class="justify-left group mx-6 flex items-center gap-3 rounded-sm border-b border-b-[#4d5066] bg-[#25273c] py-4 sm:mx-0 sm:py-5">
+            <div class="gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full bg-[#393a4c] from-[#57ddff] to-[#c058f3] hover:bg-gradient-to-br">
+              <span class="inner-gradient h-[22px] w-[22px] cursor-pointer rounded-full bg-[#25273c]"></span>
             </div>
+            <p class="text-sm text-[#c4d4e8] hover:cursor-pointer hover:text-[#c4d4e8] sm:w-[222px] sm:pl-3">
+              Jog around the park 3x
+            </p>
+            <Image
+              src="/images/icon-cross.svg"
+              width={15}
+              height={15}
+              class="absolute right-10 sm:hidden hover:cursor-pointer group-hover:block sm:relative sm:right-[-210px]"
+            />
           </li>
-          <li>
-            <div className="flex items-center justify-left bg-[#25273c] gap-3 mx-6 sm:mx-0 rounded-sm py-4 sm:py-5 border-b border-b-[#4d5066]">
-              <div class="gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full bg-[#393a4c] from-[#57ddff] to-[#c058f3] hover:bg-gradient-to-br">
-                <span class="inner-gradient h-[22px] w-[22px] cursor-pointer rounded-full bg-[#25273c] "></span>
-              </div>
-              <p className="text-sm text-[#c4d4e8] sm:pl-3 sm:w-[222px]">
-                Jog around the park 3x
-              </p>
-              <Image
-                src="/images/icon-cross.svg"
-                width={15}
-                height={15}
-                className="absolute right-10 sm:right-[-210px] sm:relative"
-              />
+
+          <li class="justify-left group mx-6 flex items-center gap-3 rounded-sm border-b border-b-[#4d5066] bg-[#25273c] py-4 sm:mx-0 sm:py-5">
+            <div class="gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full bg-[#393a4c] from-[#57ddff] to-[#c058f3] hover:bg-gradient-to-br">
+              <span class="inner-gradient h-[22px] w-[22px] cursor-pointer rounded-full bg-[#25273c]"></span>
             </div>
+            <p class="text-sm text-[#c4d4e8] hover:cursor-pointer hover:text-[#c4d4e8] sm:w-[222px] sm:pl-3">
+              Jog around the park 3x
+            </p>
+            <Image
+              src="/images/icon-cross.svg"
+              width={15}
+              height={15}
+              class="absolute right-10 sm:hidden hover:cursor-pointer group-hover:block sm:relative sm:right-[-210px]"
+            />
           </li>
-          <li>
-            <div className="flex items-center justify-left bg-[#25273c] gap-3 mx-6 sm:mx-0 rounded-sm py-4 sm:py-5 border-b border-b-[#4d5066]">
-              <div class="gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full bg-[#393a4c] from-[#57ddff] to-[#c058f3] hover:bg-gradient-to-br">
-                <span class="inner-gradient h-[22px] w-[22px] cursor-pointer rounded-full bg-[#25273c] "></span>
-              </div>
-              <p className="text-sm text-[#c4d4e8] sm:pl-3 sm:w-[222px]">
-                Jog around the park 3x
-              </p>
-              <Image
-                src="/images/icon-cross.svg"
-                width={15}
-                height={15}
-                className="absolute right-10 sm:right-[-210px] sm:relative"
-              />
+          <li class="justify-left group mx-6 flex items-center gap-3 rounded-sm border-b border-b-[#4d5066] bg-[#25273c] py-4 sm:mx-0 sm:py-5">
+            <div class="gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full bg-[#393a4c] from-[#57ddff] to-[#c058f3] hover:bg-gradient-to-br">
+              <span class="inner-gradient h-[22px] w-[22px] cursor-pointer rounded-full bg-[#25273c]"></span>
             </div>
+            <p class="text-sm text-[#c4d4e8] hover:cursor-pointer hover:text-[#c4d4e8] sm:w-[222px] sm:pl-3">
+              Jog around the park 3x
+            </p>
+            <Image
+              src="/images/icon-cross.svg"
+              width={15}
+              height={15}
+              class="absolute right-10 sm:hidden hover:cursor-pointer group-hover:block sm:relative sm:right-[-210px]"
+            />
           </li>
-          <li>
-            <div className="flex items-center justify-left bg-[#25273c] gap-3 mx-6 sm:mx-0 rounded-sm py-4 sm:py-5 border-b border-b-[#4d5066]">
-              <div class="gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full bg-[#393a4c] from-[#57ddff] to-[#c058f3] hover:bg-gradient-to-br">
-                <span class="inner-gradient h-[22px] w-[22px] cursor-pointer rounded-full bg-[#25273c] "></span>
-              </div>
-              <p className="text-sm text-[#c4d4e8] sm:pl-3 sm:w-[222px]">
-                Jog around the park 3x
-              </p>
-              <Image
-                src="/images/icon-cross.svg"
-                width={15}
-                height={15}
-                className="absolute right-10 sm:right-[-210px] sm:relative"
-              />
+          <li class="justify-left group mx-6 flex items-center gap-3 rounded-sm border-b border-b-[#4d5066] bg-[#25273c] py-4 sm:mx-0 sm:py-5">
+            <div class="gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full bg-[#393a4c] from-[#57ddff] to-[#c058f3] hover:bg-gradient-to-br">
+              <span class="inner-gradient h-[22px] w-[22px] cursor-pointer rounded-full bg-[#25273c]"></span>
             </div>
+            <p class="text-sm text-[#c4d4e8] hover:cursor-pointer hover:text-[#c4d4e8] sm:w-[222px] sm:pl-3">
+              Jog around the park 3x
+            </p>
+            <Image
+              src="/images/icon-cross.svg"
+              width={15}
+              height={15}
+              class="absolute right-10 sm:hidden hover:cursor-pointer group-hover:block sm:relative sm:right-[-210px]"
+            />
           </li>
-          <li>
-            <div className="flex items-center justify-left bg-[#25273c] gap-3 mx-6 sm:mx-0 rounded-sm py-4 sm:py-5 border-b border-b-[#4d5066]">
-              <div class="gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full bg-[#393a4c] from-[#57ddff] to-[#c058f3] hover:bg-gradient-to-br">
-                <span class="inner-gradient h-[22px] w-[22px] cursor-pointer rounded-full bg-[#25273c] "></span>
-              </div>
-              <p className="text-sm text-[#c4d4e8] sm:pl-3 sm:w-[222px]">
-                Jog around the park 3x
-              </p>
-              <Image
-                src="/images/icon-cross.svg"
-                width={15}
-                height={15}
-                className="absolute right-10 sm:right-[-210px] sm:relative"
-              />
+          <li class="justify-left group mx-6 flex items-center gap-3 rounded-sm border-b border-b-[#4d5066] bg-[#25273c] py-4 sm:mx-0 sm:py-5">
+            <div class="gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full bg-[#393a4c] from-[#57ddff] to-[#c058f3] hover:bg-gradient-to-br">
+              <span class="inner-gradient h-[22px] w-[22px] cursor-pointer rounded-full bg-[#25273c]"></span>
             </div>
+            <p class="text-sm text-[#c4d4e8] hover:cursor-pointer hover:text-[#c4d4e8] sm:w-[222px] sm:pl-3">
+              Jog around the park 3x
+            </p>
+            <Image
+              src="/images/icon-cross.svg"
+              width={15}
+              height={15}
+              class="absolute right-10 sm:hidden hover:cursor-pointer group-hover:block sm:relative sm:right-[-210px]"
+            />
           </li>
 
           <li>
