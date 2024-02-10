@@ -1,7 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import CompletedTodoItem from "./completedTodoItem";
+import ActiveTodoItem from "./activeTodoItem";
+import SortTodo from "./sortTodo";
+import Sortable from "sortablejs";
 
 const HomePage = ({ theme, changeTheme }) => {
   const [todos, setTodos] = useState([
@@ -61,6 +65,7 @@ const HomePage = ({ theme, changeTheme }) => {
   const [activeColor, setActiveColor] = useState("");
 
   const handleFilterChange = (newFilter) => {
+    console.log(typeof newFilter);
     setFilter(newFilter);
   };
 
@@ -73,6 +78,49 @@ const HomePage = ({ theme, changeTheme }) => {
       return true;
     }
   });
+
+  const SortableList = () => {
+    useEffect(() => {
+      // Initialize SortableJS for the list
+      new Sortable(document.getElementById("sortable-list"), {
+        animation: 150, // Animation duration in milliseconds (default: 150)
+        // Add any additional options here
+        onEnd: function (evt) {
+          console.log("Item moved:", evt.oldIndex, "to", evt.newIndex);
+          console.log(evt);
+        },
+      });
+    }, []); // Ensure the effect runs only once after initial render
+
+    return (
+      <span id="sortable-list">
+        {filteredTodos.map((item, key) => (
+          <>
+            {item.isCompleted ? (
+              <CompletedTodoItem
+                key={key}
+                theme={theme}
+                item={item}
+                handleCompleted={() => handleCompleted(key)}
+                deleteItem={deleteItem}
+                todos={todos}
+              />
+            ) : (
+              <ActiveTodoItem
+                key={key}
+                theme={theme}
+                item={item}
+                handleCompleted={() => handleCompleted(key)}
+                deleteItem={deleteItem}
+                todos={todos}
+              />
+            )}
+          </>
+        ))}
+      </span>
+    );
+  };
+
   return (
     <div
       id="container "
@@ -140,92 +188,7 @@ const HomePage = ({ theme, changeTheme }) => {
 
           {/* uncompleted */}
           {/* First item */}
-
-          {filteredTodos.map((item, key) => (
-            <>
-              {item.isCompleted ? (
-                <li className="group" draggable>
-                  <div
-                    className={`  flex items-center justify-left ${
-                      theme == "dark"
-                        ? "bg-[#25273c] border-b border-b-[#4d5066] "
-                        : "bg-[#fafafa] border-b border-b-[#d2d3db] shadow-xl"
-                    } bg-[#25273c] gap-3 mx-6 sm:mx-0 ${
-                      key == 0 ? "rounded-tl-md rounded-tr-md" : ""
-                    }  py-4  sm:py-5 `}
-                  >
-                    <span
-                      className={`w-6 h-6 border-2  ${
-                        theme == "dark" ? "border-[#393a4c]" : "border-none"
-                      } rounded-full ml-5  bg-gradient-to-br from-[#57ddff] to-[#c058f3] hover:cursor-pointer`}
-                      onClick={() => handleCompleted(key)}
-                    ></span>
-                    <Image
-                      src="/images/icon-check.svg"
-                      width={11}
-                      height={11}
-                      className="absolute left-[50px] sm:left-[-30px] sm:relative hover:cursor-pointer"
-                      onClick={() => handleCompleted(key)}
-                    />
-
-                    <p
-                      className={`text-sm  ${
-                        theme == "dark" ? "text-[#4d5066]" : "text-[#d2d3db]"
-                      } line-through sm:ml-[-12px] hover:cursor-pointer sm:w-[212px]`}
-                    >
-                      {item.item}
-                    </p>
-                    <Image
-                      src="/images/icon-cross.svg"
-                      width={15}
-                      height={15}
-                      className="absolute right-10 sm:hidden hover:cursor-pointer group-hover:block sm:relative sm:right-[-210px]"
-                      onClick={() => deleteItem(key)}
-                    />
-                  </div>
-                </li>
-              ) : (
-                <li
-                  className={`justify-left group mx-6 flex items-center gap-3   ${
-                    theme == "dark"
-                      ? "custom-shadow bg-[#25273c] border-b border-b-[#4d5066]"
-                      : "bg-[#fafafa] border-b-[1px] border-b-[#d2d3db] shadow-xl "
-                  } py-4 sm:mx-0 sm:py-5 ${
-                    key == 0 ? "rounded-tl-md rounded-tr-md" : ""
-                  }`}
-                  key={key}
-                  draggable
-                >
-                  <div
-                    className={`gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full ${
-                      theme == "dark" ? "bg-[#393a4c]" : "bg-[#d2d3db]"
-                    }  from-[#57ddff] to-[#c058f3] hover:bg-gradient-to-br `}
-                    onClick={() => handleCompleted(key)}
-                  >
-                    <span
-                      className={`inner-gradient h-[22px] w-[22px] cursor-pointer rounded-full ${
-                        theme == "dark" ? "bg-[#25273c]" : "bg-[#fafafa]"
-                      }`}
-                    ></span>
-                  </div>
-                  <p
-                    className={`text-sm text-[#484b6a] hover:cursor-pointer  sm:w-[222px] sm:pl-3 ${
-                      theme == "dark" ? "text-[#e4e5f1]" : "text-[#484b6a]"
-                    }`}
-                  >
-                    {item.item}
-                  </p>
-                  <Image
-                    src="/images/icon-cross.svg"
-                    width={15}
-                    height={15}
-                    className="absolute right-10 sm:hidden hover:cursor-pointer group-hover:block sm:relative sm:right-[-210px]"
-                    onClick={() => deleteItem(key)}
-                  />
-                </li>
-              )}
-            </>
-          ))}
+          <SortableList />
 
           <li>
             <div
@@ -253,82 +216,13 @@ const HomePage = ({ theme, changeTheme }) => {
             </div>
           </li>
         </ul>
-        <div id="sort" className="mt-5  sm:mt-0">
-          <div
-            className={`flex items-center justify-center sm:justify-between bg-[#25273c] ${
-              theme == "dark"
-                ? "custom-shadow shadow-xl bg-[#25273c]"
-                : "bg-[#fafafa]"
-            } gap-3 mx-6 sm:mx-0 rounded-bl-md rounded-br-md py-4 sm:py-5 px-5  shadow-blur`}
-          >
-            <p
-              className={`text-sm  ${
-                theme == "dark" ? "text-[#777a92]" : "text-[#9394a5]"
-              } sm:block hidden`}
-            >
-              {formattedItems()}
-            </p>
-            <span className="flex sm:gap-3 gap-5">
-              <p
-                className={`text-sm ${
-                  filter === "all" ? "text-[#0073e6]" : "text-[#777a92]"
-                } ${
-                  theme == "light" && filter !== "all" ? "text-[#9394a5]" : ""
-                } hover:text-[#cacde8] ${
-                  theme == "dark"
-                    ? "hover:text-[#cacde8]"
-                    : "hover:text-[#393a4c]"
-                } hover:font-bold hover:cursor-pointer `}
-                onClick={() => handleFilterChange("all")}
-              >
-                All
-              </p>
-              <p
-                className={`text-sm ${
-                  filter === "active" ? "text-[#0073e6]" : "text-[#777a92]"
-                } ${
-                  theme == "light" && filter !== "active"
-                    ? "text-[#9394a5]"
-                    : ""
-                }  ${
-                  theme == "dark"
-                    ? " hover:text-[#cacde8] hover:font-bold"
-                    : " font-bold"
-                } hover:text-[#484b6a] hover:cursor-pointer`}
-                onClick={() => handleFilterChange("active")}
-              >
-                Active
-              </p>
-              <p
-                className={`text-sm ${
-                  filter === "completed" ? "text-[#0073e6]" : "text-[#777a92]"
-                } ${
-                  theme == "light" && filter !== "completed"
-                    ? "text-[#9394a5]"
-                    : ""
-                }  ${
-                  theme == "dark"
-                    ? " hover:text-[#cacde8] hover:font-bold"
-                    : " font-bold"
-                } hover:text-[#484b6a] hover:cursor-pointer`}
-                onClick={() => handleFilterChange("completed")}
-              >
-                Completed
-              </p>
-            </span>
-
-            <p
-              className={`text-sm ${
-                theme == "dark"
-                  ? "text-[#777a92] hover:text-[#cacde8]"
-                  : "text-[#9394a5] hover:text-[#484b6a]"
-              } sm:block hidden  hover:cursor-pointer`}
-              onClick={clearCompleted}
-            >
-              Clear completed
-            </p>
-          </div>
-        </div>
+        <SortTodo
+          theme={theme}
+          filter={filter}
+          handleFilterChange={(value) => handleFilterChange(value)}
+          clearCompleted={clearCompleted}
+          formattedItems={formattedItems}
+        />
       </div>
       <p
         className={`text-center mt-5 sm:py-9 my-3  ${
