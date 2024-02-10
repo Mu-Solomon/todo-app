@@ -58,10 +58,11 @@ const HomePage = ({ theme, changeTheme }) => {
 
   const [filter, setFilter] = useState("all");
 
+  const [activeColor, setActiveColor] = useState("");
+
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
   };
-
 
   const filteredTodos = todos.filter((todo) => {
     if (filter === "active") {
@@ -149,7 +150,9 @@ const HomePage = ({ theme, changeTheme }) => {
                       theme == "dark"
                         ? "bg-[#25273c] border-b border-b-[#4d5066] "
                         : "bg-[#fafafa] border-b border-b-[#d2d3db] shadow-xl"
-                    } bg-[#25273c] gap-3 mx-6 sm:mx-0 rounded-tl-md rounded-tr-md py-4  sm:py-5 `}
+                    } bg-[#25273c] gap-3 mx-6 sm:mx-0 ${
+                      key == 0 ? "rounded-tl-md rounded-tr-md" : ""
+                    }  py-4  sm:py-5 `}
                   >
                     <span
                       className={`w-6 h-6 border-2  ${
@@ -168,7 +171,7 @@ const HomePage = ({ theme, changeTheme }) => {
                     <p
                       className={`text-sm  ${
                         theme == "dark" ? "text-[#4d5066]" : "text-[#d2d3db]"
-                      } line-through sm:ml-[-12px] hover:cursor-pointer`}
+                      } line-through sm:ml-[-12px] hover:cursor-pointer sm:w-[212px]`}
                     >
                       {item.item}
                     </p>
@@ -187,13 +190,15 @@ const HomePage = ({ theme, changeTheme }) => {
                     theme == "dark"
                       ? "custom-shadow bg-[#25273c] border-b border-b-[#4d5066]"
                       : "bg-[#fafafa] border-b-[1px] border-b-[#d2d3db] shadow-xl "
-                  } py-4 sm:mx-0 sm:py-5`}
+                  } py-4 sm:mx-0 sm:py-5 ${
+                    key == 0 ? "rounded-tl-md rounded-tr-md" : ""
+                  }`}
                   key={key}
                 >
                   <div
                     className={`gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full ${
                       theme == "dark" ? "bg-[#393a4c]" : "bg-[#d2d3db]"
-                    }  from-[#57ddff] to-[#c058f3] hover:bg-gradient-to-br`}
+                    }  from-[#57ddff] to-[#c058f3] hover:bg-gradient-to-br `}
                     onClick={() => handleCompleted(key)}
                   >
                     <span
@@ -264,7 +269,11 @@ const HomePage = ({ theme, changeTheme }) => {
             </p>
             <span className="flex sm:gap-3 gap-5">
               <p
-                className={`text-sm text-[#0073e6] hover:text-[#cacde8] ${
+                className={`text-sm ${
+                  filter === "all" ? "text-[#0073e6]" : "text-[#777a92]"
+                } ${
+                  theme == "light" && filter !== "all" ? "text-[#9394a5]" : ""
+                } hover:text-[#cacde8] ${
                   theme == "dark"
                     ? "hover:text-[#cacde8]"
                     : "hover:text-[#393a4c]"
@@ -274,20 +283,32 @@ const HomePage = ({ theme, changeTheme }) => {
                 All
               </p>
               <p
-                className={`text-sm  ${
+                className={`text-sm ${
+                  filter === "active" ? "text-[#0073e6]" : "text-[#777a92]"
+                } ${
+                  theme == "light" && filter !== "active"
+                    ? "text-[#9394a5]"
+                    : ""
+                }  ${
                   theme == "dark"
-                    ? "text-[#777a92] hover:text-[#cacde8] hover:font-bold"
-                    : "text-[#9394a5] font-bold"
+                    ? " hover:text-[#cacde8] hover:font-bold"
+                    : " font-bold"
                 } hover:text-[#484b6a] hover:cursor-pointer`}
                 onClick={() => handleFilterChange("active")}
               >
                 Active
               </p>
               <p
-                className={`text-sm  ${
+                className={`text-sm ${
+                  filter === "completed" ? "text-[#0073e6]" : "text-[#777a92]"
+                } ${
+                  theme == "light" && filter !== "completed"
+                    ? "text-[#9394a5]"
+                    : ""
+                }  ${
                   theme == "dark"
-                    ? "text-[#777a92] hover:text-[#cacde8] hover:font-bold"
-                    : "text-[#9394a5] font-bold"
+                    ? " hover:text-[#cacde8] hover:font-bold"
+                    : " font-bold"
                 } hover:text-[#484b6a] hover:cursor-pointer`}
                 onClick={() => handleFilterChange("completed")}
               >
