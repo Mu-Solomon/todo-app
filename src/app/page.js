@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function Home() {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   const changeTheme = () => {
     if (theme == "dark") {
       setTheme("light");
