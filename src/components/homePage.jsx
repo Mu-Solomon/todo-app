@@ -144,7 +144,7 @@ const HomePage = ({ theme, changeTheme }) => {
           {filteredTodos.map((item, key) => (
             <>
               {item.isCompleted ? (
-                <li className="group">
+                <li className="group" draggable>
                   <div
                     className={`  flex items-center justify-left ${
                       theme == "dark"
@@ -194,6 +194,7 @@ const HomePage = ({ theme, changeTheme }) => {
                     key == 0 ? "rounded-tl-md rounded-tr-md" : ""
                   }`}
                   key={key}
+                  draggable
                 >
                   <div
                     className={`gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full ${
