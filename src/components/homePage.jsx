@@ -7,9 +7,71 @@ const HomePage = ({ theme, changeTheme }) => {
   const [todos, setTodos] = useState([
     { item: "Wake up at 5am", isCompleted: true },
     { item: "Start chores at 6:30am", isCompleted: false },
-    { item: "Get to work by 8:30am", isCompleted: false },
+    { item: "Get to work by 8:30am", isCompleted: true },
     { item: "Code code code!!!", isCompleted: true },
   ]);
+
+  const [input, setInput] = useState("");
+
+  const handleInput = (event) => {
+    setInput(event.target.value);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      const updatedTodos = [{ item: input, isCompleted: false }, ...todos];
+      setTodos(updatedTodos);
+      setInput("");
+    }
+  };
+
+  const handleCompleted = (key) => {
+    const updatedTodos = [...todos];
+    updatedTodos[key].isCompleted = !updatedTodos[key].isCompleted;
+    setTodos(updatedTodos);
+  };
+
+  const deleteItem = (key) => {
+    const updatedTodos = [...todos];
+    updatedTodos.splice(key, 1);
+    setTodos(updatedTodos);
+  };
+
+  const itemsLeft = todos.filter((item) => !item.isCompleted).length;
+
+  const formattedItems = () => {
+    var text = "";
+    if (itemsLeft > 1) {
+      text = itemsLeft + " items left";
+    } else if (itemsLeft == 1) {
+      text = itemsLeft + " item left";
+    } else if (itemsLeft < 1) {
+      text = "All done!";
+    }
+    return text;
+  };
+
+  const clearCompleted = () => {
+    const updatedTodos = todos.filter((item) => !item.isCompleted);
+    setTodos(updatedTodos);
+  };
+
+  const [filter, setFilter] = useState("all");
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+  };
+
+
+  const filteredTodos = todos.filter((todo) => {
+    if (filter === "active") {
+      return !todo.isCompleted;
+    } else if (filter === "completed") {
+      return todo.isCompleted;
+    } else {
+      return true;
+    }
+  });
   return (
     <div
       id="container "
@@ -62,10 +124,13 @@ const HomePage = ({ theme, changeTheme }) => {
         <input
           type="text"
           name="todoItem"
+          value={input}
           placeholder="Create a new todo..."
           className={` ${
             theme == "dark" ? "bg-[#25273c] text-[#e4e5f1]" : "bg-[#fafafa]"
           } rounded-md py-3 sm:py-5 text-[#484b6a] w-full focus:border-transparent focus:outline-none`}
+          onChange={handleInput}
+          onKeyPress={handleKeyPress}
         />
       </div>
       <div className="sm:w-[550px] sm:mt-5">
@@ -75,7 +140,7 @@ const HomePage = ({ theme, changeTheme }) => {
           {/* uncompleted */}
           {/* First item */}
 
-          {todos.map((item, key) => (
+          {filteredTodos.map((item, key) => (
             <>
               {item.isCompleted ? (
                 <li className="group">
@@ -90,25 +155,29 @@ const HomePage = ({ theme, changeTheme }) => {
                       className={`w-6 h-6 border-2  ${
                         theme == "dark" ? "border-[#393a4c]" : "border-none"
                       } rounded-full ml-5  bg-gradient-to-br from-[#57ddff] to-[#c058f3] hover:cursor-pointer`}
+                      onClick={() => handleCompleted(key)}
                     ></span>
                     <Image
                       src="/images/icon-check.svg"
                       width={11}
                       height={11}
-                      className="absolute left-[50px] sm:left-[-30px] sm:relative"
+                      className="absolute left-[50px] sm:left-[-30px] sm:relative hover:cursor-pointer"
+                      onClick={() => handleCompleted(key)}
                     />
+
                     <p
                       className={`text-sm  ${
                         theme == "dark" ? "text-[#4d5066]" : "text-[#d2d3db]"
                       } line-through sm:ml-[-12px] hover:cursor-pointer`}
                     >
-                      Complete online Javascript course
+                      {item.item}
                     </p>
                     <Image
                       src="/images/icon-cross.svg"
                       width={15}
                       height={15}
-                      className="absolute sm:hidden right-10 sm:right-[-210px] sm:relative hover:cursor-pointer group-hover:block"
+                      className="absolute right-10 sm:hidden hover:cursor-pointer group-hover:block sm:relative sm:right-[-210px]"
+                      onClick={() => deleteItem(key)}
                     />
                   </div>
                 </li>
@@ -125,6 +194,7 @@ const HomePage = ({ theme, changeTheme }) => {
                     className={`gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full ${
                       theme == "dark" ? "bg-[#393a4c]" : "bg-[#d2d3db]"
                     }  from-[#57ddff] to-[#c058f3] hover:bg-gradient-to-br`}
+                    onClick={() => handleCompleted(key)}
                   >
                     <span
                       className={`inner-gradient h-[22px] w-[22px] cursor-pointer rounded-full ${
@@ -144,6 +214,7 @@ const HomePage = ({ theme, changeTheme }) => {
                     width={15}
                     height={15}
                     className="absolute right-10 sm:hidden hover:cursor-pointer group-hover:block sm:relative sm:right-[-210px]"
+                    onClick={() => deleteItem(key)}
                   />
                 </li>
               )}
@@ -163,12 +234,13 @@ const HomePage = ({ theme, changeTheme }) => {
                   theme == "dark" ? "text-[#4d5066]" : "text-[#9394a5]"
                 }`}
               >
-                5 items left
+                {formattedItems()}
               </p>
               <p
                 className={`text-sm ${
                   theme == "dark" ? "text-[#4d5066]" : "text-[#9394a5]"
                 } hover:cursor-pointer`}
+                onClick={clearCompleted}
               >
                 Clear completed
               </p>
@@ -188,7 +260,7 @@ const HomePage = ({ theme, changeTheme }) => {
                 theme == "dark" ? "text-[#777a92]" : "text-[#9394a5]"
               } sm:block hidden`}
             >
-              5 items left
+              {formattedItems()}
             </p>
             <span className="flex sm:gap-3 gap-5">
               <p
@@ -197,6 +269,7 @@ const HomePage = ({ theme, changeTheme }) => {
                     ? "hover:text-[#cacde8]"
                     : "hover:text-[#393a4c]"
                 } hover:font-bold hover:cursor-pointer `}
+                onClick={() => handleFilterChange("all")}
               >
                 All
               </p>
@@ -206,6 +279,7 @@ const HomePage = ({ theme, changeTheme }) => {
                     ? "text-[#777a92] hover:text-[#cacde8] hover:font-bold"
                     : "text-[#9394a5] font-bold"
                 } hover:text-[#484b6a] hover:cursor-pointer`}
+                onClick={() => handleFilterChange("active")}
               >
                 Active
               </p>
@@ -215,6 +289,7 @@ const HomePage = ({ theme, changeTheme }) => {
                     ? "text-[#777a92] hover:text-[#cacde8] hover:font-bold"
                     : "text-[#9394a5] font-bold"
                 } hover:text-[#484b6a] hover:cursor-pointer`}
+                onClick={() => handleFilterChange("completed")}
               >
                 Completed
               </p>
@@ -226,6 +301,7 @@ const HomePage = ({ theme, changeTheme }) => {
                   ? "text-[#777a92] hover:text-[#cacde8]"
                   : "text-[#9394a5] hover:text-[#484b6a]"
               } sm:block hidden  hover:cursor-pointer`}
+              onClick={clearCompleted}
             >
               Clear completed
             </p>
