@@ -36,7 +36,8 @@ const HomePage = ({ theme, changeTheme }) => {
   };
 
   const deleteItem = (key) => {
-    const updatedTodos = [...todos];
+    console.log(key);
+      const updatedTodos = [...todos];
     updatedTodos.splice(key, 1);
     setTodos(updatedTodos);
   };
@@ -81,16 +82,23 @@ const HomePage = ({ theme, changeTheme }) => {
 
   const SortableList = () => {
     useEffect(() => {
-      // Initialize SortableJS for the list
-      new Sortable(document.getElementById("sortable-list"), {
-        animation: 150, // Animation duration in milliseconds (default: 150)
-        // Add any additional options here
-        onEnd: function (evt) {
-          console.log("Item moved:", evt.oldIndex, "to", evt.newIndex);
-          console.log(evt);
-        },
-      });
-    }, []); // Ensure the effect runs only once after initial render
+      const sortableList = new Sortable(
+        document.getElementById("sortable-list"),
+        {
+          animation: 150, // Animation duration in milliseconds
+          onEnd: ({ oldIndex, newIndex }) => {
+            const newTodos = [...todos];
+            const [removed] = newTodos.splice(oldIndex, 1);
+            newTodos.splice(newIndex, 0, removed);
+            setTodos(newTodos);
+          },
+        }
+      );
+
+      return () => {
+        sortableList.destroy(); // Cleanup SortableJS instance
+      };
+    }, [todos, setTodos]);
 
     return (
       <span id="sortable-list">
@@ -102,7 +110,7 @@ const HomePage = ({ theme, changeTheme }) => {
                 theme={theme}
                 item={item}
                 handleCompleted={() => handleCompleted(key)}
-                deleteItem={deleteItem}
+                deleteItem={() => deleteItem(key)}
                 todos={todos}
               />
             ) : (
@@ -111,7 +119,7 @@ const HomePage = ({ theme, changeTheme }) => {
                 theme={theme}
                 item={item}
                 handleCompleted={() => handleCompleted(key)}
-                deleteItem={deleteItem}
+                deleteItem={() => deleteItem(key)}
                 todos={todos}
               />
             )}
