@@ -38,7 +38,7 @@ const CompletedTodoItem = ({
         <p
           className={`text-sm  ${
             theme == "dark" ? "text-[#4d5066]" : "text-[#d2d3db]"
-          } line-through sm:ml-[-12px] hover:cursor-pointer sm:w-[212px]`}
+          } line-through sm:ml-[-12px] hover:cursor-pointer sm:w-[214px]`}
         >
           {item.item}
         </p>

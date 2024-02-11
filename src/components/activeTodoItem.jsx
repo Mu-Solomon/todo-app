@@ -32,7 +32,7 @@ const ActiveTodoItem = ({
         ></span>
       </div>
       <p
-        className={`text-sm text-[#484b6a] hover:cursor-pointer  sm:w-[222px] sm:pl-3 ${
+        className={`text-sm text-[#484b6a] hover:cursor-pointer  sm:w-[300px]  sm:pl-3 ${
           theme == "dark" ? "text-[#e4e5f1]" : "text-[#484b6a]"
         }`}
       >
@@ -43,7 +43,7 @@ const ActiveTodoItem = ({
         src="/images/icon-cross.svg"
         width={15}
         height={15}
-        className="absolute right-10 sm:hidden hover:cursor-pointer group-hover:block sm:relative sm:right-[-210px]"
+        className="absolute right-10 sm:hidden hover:cursor-pointer group-hover:block sm:relative sm:right-[-135px]"
         onClick={() => deleteItem(keyItem)}
       />
     </li>

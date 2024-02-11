@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata = {
   title: "Todo App",
-  description: "Add your items",
+  description: "by Solomon Muyonjo, add your items and track your progress",
 };
 
 export default function RootLayout({ children }) {
