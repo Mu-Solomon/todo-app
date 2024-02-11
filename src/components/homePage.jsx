@@ -8,6 +8,7 @@ import SortTodo from "./sortTodo";
 import Sortable from "sortablejs";
 
 const HomePage = ({ theme, changeTheme }) => {
+  // SETTING TODOS EVEN IF YOU REFRESH YOU STAY
   const [todos, setTodos] = useState(() => {
     const storedTodos = localStorage.getItem("todos");
     return storedTodos ? JSON.parse(storedTodos) : [];
@@ -23,6 +24,7 @@ const HomePage = ({ theme, changeTheme }) => {
     setInput(event.target.value);
   };
 
+  //When I press Enter the item is added to the localstorage
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       const updatedTodos = [{ item: input, isCompleted: false }, ...todos];
@@ -82,6 +84,7 @@ const HomePage = ({ theme, changeTheme }) => {
     }
   });
 
+  //Helps to drag and drop
   const SortableList = () => {
     useEffect(() => {
       const sortableList = new Sortable(
@@ -199,12 +202,7 @@ const HomePage = ({ theme, changeTheme }) => {
       </div>
       <div className="sm:w-[550px] sm:mt-5">
         <ul>
-          {/* completed */}
-
-          {/* uncompleted */}
-          {/* First item */}
           <SortableList />
-
           <li>
             <div
               className={`flex items-center justify-between ${
