@@ -31,7 +31,7 @@ const HomePage = ({ theme, changeTheme }) => {
 
   //When I press Enter the item is added to the localstorage
   const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && input !== "") {
       const updatedTodos = [{ item: input, isCompleted: false }, ...todos];
       setTodos(updatedTodos);
       setInput("");
@@ -129,6 +129,7 @@ const HomePage = ({ theme, changeTheme }) => {
               <ActiveTodoItem
                 key={index}
                 keyItem={index}
+                index={index}
                 theme={theme}
                 item={item}
                 handleCompleted={() => handleCompleted(index)}

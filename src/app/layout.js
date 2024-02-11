@@ -1,4 +1,5 @@
-import { Inter } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
+
 import "./globals.css";
 
 export const metadata = {
@@ -7,5 +8,12 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  return <html lang="en">{children}</html>;
+  return (
+    <html lang="en">
+      <head>
+        <GoogleAnalytics gaId="G-SJEQ60HYRX" />
+      </head>
+      {children}
+    </html>
+  );
 }
