@@ -9,11 +9,16 @@ import Sortable from "sortablejs";
 
 const HomePage = ({ theme, changeTheme }) => {
   // SETTING TODOS EVEN IF YOU REFRESH YOU STAY
-  const [todos, setTodos] = useState(() => {
-    const storedTodos = localStorage.getItem("todos");
-    return storedTodos ? JSON.parse(storedTodos) : [];
-  });
+  const [todos, setTodos] = useState([]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedTodos = localStorage.getItem("todos");
+      if (storedTodos) {
+        setTodos(JSON.parse(storedTodos));
+      }
+    }
+  }, []);
   // Update local storage whenever todos change
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -203,6 +208,7 @@ const HomePage = ({ theme, changeTheme }) => {
       <div className="sm:w-[550px] sm:mt-5">
         <ul>
           <SortableList />
+
           <li>
             <div
               className={`flex items-center justify-between ${
