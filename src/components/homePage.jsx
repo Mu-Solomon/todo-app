@@ -8,13 +8,15 @@ import SortTodo from "./sortTodo";
 import Sortable from "sortablejs";
 
 const HomePage = ({ theme, changeTheme }) => {
-  const [todos, setTodos] = useState([
-    { item: "Wake up at 5am", isCompleted: true },
-    { item: "Start chores at 6:30am", isCompleted: false },
-    { item: "Get to work by 8:30am", isCompleted: true },
-    { item: "Code code code!!!", isCompleted: true },
-  ]);
+  const [todos, setTodos] = useState(() => {
+    const storedTodos = localStorage.getItem("todos");
+    return storedTodos ? JSON.parse(storedTodos) : [];
+  });
 
+  // Update local storage whenever todos change
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
   const [input, setInput] = useState("");
 
   const handleInput = (event) => {
@@ -37,7 +39,7 @@ const HomePage = ({ theme, changeTheme }) => {
 
   const deleteItem = (key) => {
     console.log(key);
-      const updatedTodos = [...todos];
+    const updatedTodos = [...todos];
     updatedTodos.splice(key, 1);
     setTodos(updatedTodos);
   };
@@ -102,28 +104,31 @@ const HomePage = ({ theme, changeTheme }) => {
 
     return (
       <span id="sortable-list">
-        {filteredTodos.map((item, key) => (
-          <>
+        {filteredTodos.map((item, index) => (
+          <React.Fragment key={index}>
             {item.isCompleted ? (
               <CompletedTodoItem
-                key={key}
+                key={index}
+                keyItem={index}
+                index={index}
                 theme={theme}
                 item={item}
-                handleCompleted={() => handleCompleted(key)}
-                deleteItem={() => deleteItem(key)}
+                handleCompleted={() => handleCompleted(index)}
+                deleteItem={() => deleteItem(index)}
                 todos={todos}
               />
             ) : (
               <ActiveTodoItem
-                key={key}
+                key={index}
+                keyItem={index}
                 theme={theme}
                 item={item}
-                handleCompleted={() => handleCompleted(key)}
-                deleteItem={() => deleteItem(key)}
+                handleCompleted={() => handleCompleted(index)}
+                deleteItem={() => deleteItem(index)}
                 todos={todos}
               />
             )}
-          </>
+          </React.Fragment>
         ))}
       </span>
     );
@@ -150,6 +155,7 @@ const HomePage = ({ theme, changeTheme }) => {
         {theme == "dark" ? (
           <button onClick={changeTheme}>
             <Image
+              alt="Light sun"
               src="/images/icon-sun.svg"
               className="sm:w-8 sm:h-8 hover:cursor-pointer"
               width={20}
@@ -159,6 +165,7 @@ const HomePage = ({ theme, changeTheme }) => {
         ) : (
           <button onClick={changeTheme}>
             <Image
+              alt="Dark moon"
               src="/images/icon-moon.svg"
               className="sm:w-8 sm:h-8 hover:cursor-pointer"
               width={20}

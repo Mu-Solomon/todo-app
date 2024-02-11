@@ -3,7 +3,8 @@ import Image from "next/image";
 
 const CompletedTodoItem = ({
   theme,
-  key,
+  index,
+  keyItem,
   item,
   handleCompleted,
   deleteItem,
@@ -16,7 +17,7 @@ const CompletedTodoItem = ({
             ? "bg-[#25273c] border-b border-b-[#4d5066] "
             : "bg-[#fafafa] border-b border-b-[#d2d3db] shadow-xl"
         } bg-[#25273c] gap-3 mx-6 sm:mx-0 ${
-          key == 0 ? "rounded-tl-md rounded-tr-md" : ""
+          index == 0 ? "rounded-tl-md rounded-tr-md" : ""
         }  py-4  sm:py-5 `}
       >
         <span
@@ -26,11 +27,12 @@ const CompletedTodoItem = ({
           onClick={handleCompleted}
         ></span>
         <Image
+          alt="Cross image"
           src="/images/icon-check.svg"
           width={11}
           height={11}
           className="absolute left-[50px] sm:left-[-30px] sm:relative hover:cursor-pointer"
-          onClick={() => handleCompleted(key)}
+          onClick={() => handleCompleted(keyItem)}
         />
 
         <p
@@ -41,11 +43,12 @@ const CompletedTodoItem = ({
           {item.item}
         </p>
         <Image
+          alt="Cross image"
           src="/images/icon-cross.svg"
           width={15}
           height={15}
           className="absolute right-10 sm:hidden hover:cursor-pointer group-hover:block sm:relative sm:right-[-210px]"
-          onClick={() => deleteItem(key)}
+          onClick={() => deleteItem(keyItem)}
         />
       </div>
     </li>

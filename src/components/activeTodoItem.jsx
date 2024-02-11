@@ -1,15 +1,23 @@
 import React from "react";
 import Image from "next/image";
 
-const ActiveTodoItem = ({theme, key, item, handleCompleted, deleteItem}) => {
+const ActiveTodoItem = ({
+  theme,
+  index,
+  keyItem,
+  item,
+  handleCompleted,
+  deleteItem,
+}) => {
   return (
     <li
       className={`justify-left group mx-6 flex items-center gap-3   ${
         theme == "dark"
           ? "custom-shadow bg-[#25273c] border-b border-b-[#4d5066]"
           : "bg-[#fafafa] border-b-[1px] border-b-[#d2d3db] shadow-xl "
-      } py-4 sm:mx-0 sm:py-5 ${key == 0 ? "rounded-tl-md rounded-tr-md" : ""}`}
-      key={key}
+      } py-4 sm:mx-0 sm:py-5 ${
+        index == 0 ? "rounded-tl-md rounded-tr-md" : ""
+      }`}
     >
       <div
         className={`gradient ml-5 flex h-6 w-6 items-center justify-center rounded-full ${
@@ -31,11 +39,12 @@ const ActiveTodoItem = ({theme, key, item, handleCompleted, deleteItem}) => {
         {item.item}
       </p>
       <Image
+        alt="Image cross"
         src="/images/icon-cross.svg"
         width={15}
         height={15}
         className="absolute right-10 sm:hidden hover:cursor-pointer group-hover:block sm:relative sm:right-[-210px]"
-        onClick={() => deleteItem(key)}
+        onClick={() => deleteItem(keyItem)}
       />
     </li>
   );

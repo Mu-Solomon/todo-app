@@ -1,22 +1,40 @@
+// pages/index.js
 "use client";
 
 import HomePage from "@/components/homePage";
-import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [theme, setTheme] = useState("dark");
-  const changeTheme = () => {
-    if (theme == "dark") {
-      setTheme("light");
-    } else {
-      setTheme("dark");
-    }
-    console.log(theme);
+  // State to manage the theme
+  const [theme, setTheme] = useState("light"); // Default to light mode
+
+  // Function to toggle the theme
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
+
+  // Effect to check system color scheme preference
+  useEffect(() => {
+    const prefersDarkMode =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    setTheme(prefersDarkMode ? "dark" : "light");
+
+    const handleSystemColorSchemeChange = (e) => {
+      setTheme(e.matches ? "dark" : "light");
+    };
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    mediaQuery.addEventListener("change", handleSystemColorSchemeChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleSystemColorSchemeChange);
+    };
+  }, []);
+
   return (
-    <body className={` ${theme == "dark" ? "bg-[#25273c]" : "bg-[#fafafa]"}`}>
-      <HomePage theme={theme} changeTheme={changeTheme} />
+    <body className={` ${theme === "dark" ? "bg-[#25273c]" : "bg-[#fafafa]"}`}>
+      <HomePage theme={theme} changeTheme={toggleTheme} />
     </body>
   );
 }
